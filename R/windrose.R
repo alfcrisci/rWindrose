@@ -111,7 +111,7 @@ function(data = NULL,
     
   dir_centered_labels <- as.character(seq(0,360,dirres))
   
-  dir_centered_labels <- dir_centered_labels[dir_centered_labels]=dir_centered_labels[1]
+  dir_centered_labels[dir_centered_labels]=dir_centered_labels[1]
   
   
   
