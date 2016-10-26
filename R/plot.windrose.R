@@ -1,5 +1,5 @@
 #' @name plot
-#' @title Plots a windrose object using ggplot2
+#' @title Plots a waverose or windrose object using ggplot2
 #' @usage plot(data_rose)
 #' @param data a data object of class windrose
 #' @param palette (optional) one of the RColorBrewer ColorBrewer palettes
