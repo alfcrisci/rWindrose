@@ -25,6 +25,7 @@ function(data = NULL,
                      spdseq = NULL,
                      palette = "YlGnBu",
                      countmax = NA,
+                     flag_centered=F,  
                      plot_rose = FALSE){
   
   
@@ -107,11 +108,24 @@ function(data = NULL,
                         "-",
                         round(seq(3*dirres/2, 360-dirres/2, by = dirres), 0)),
                   paste(round(360-dirres/2, 0),"-",round(dirres/2, 0)))
+    
+  dir_centered_labels <- as.character(seq(0,360,dirres))
+  
+  dir_centered_labels <- dir_centered_labels[dir_centered_labels]=dir_centered_labels[1]
+  
+  
+  
+    
   # assign each wind direction to a bin
   dir_binned <- cut(data[[dir]],
                     breaks = dir_breaks,
                     ordered_result = TRUE)
+  
   levels(dir_binned) <- dir_labels
+  if ( flag_centered=T) {
+                         levels(dir_binned) <- dir_centered_labels
+                        }  
+ 
   data$dir_binned  <-  dir_binned
   
   wind_data <- structure(list(data = data, dirres = dirres, countmax = countmax, spd_colors = spd_colors), 
