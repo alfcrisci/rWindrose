@@ -122,7 +122,7 @@ function(data = NULL,
                     ordered_result = TRUE)
   
   levels(dir_binned) <- dir_labels
-  if ( flag_centered=T) {
+  if ( flag_centered==T) {
                          levels(dir_binned) <- dir_centered_labels
                         }  
  
