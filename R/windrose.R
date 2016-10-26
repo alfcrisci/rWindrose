@@ -109,9 +109,7 @@ function(data = NULL,
                         round(seq(3*dirres/2, 360-dirres/2, by = dirres), 0)),
                   paste(round(360-dirres/2, 0),"-",round(dirres/2, 0)))
     
-  dir_centered_labels <- as.character(seq(0,360,dirres))
-  
-  dir_centered_labels[dir_centered_labels]=dir_centered_labels[1]
+  dir_centered_labels <- as.character(seq(0,359,dirres))
   
   
   
