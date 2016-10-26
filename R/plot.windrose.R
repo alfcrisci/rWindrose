@@ -4,13 +4,15 @@
 #' @param data a data object of class windrose
 #' @param palette (optional) one of the RColorBrewer ColorBrewer palettes
 #' @param plot_theme (optional) a character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
+#' @param title_legend (optional) a custom character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
 #' @return returns a ggplot2 graph object
 #' @export
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
 plot.windrose <-
 function(data, x = NULL, y = NULL, 
                           palette = NULL, 
-                          plot_theme = "theme_minimal",
+                          plot_theme = "theme_minimal", 
+                          title_legend="Wind Speed / m s  ^ ~-1", 
                           ...) {
   
   # dirres
@@ -52,7 +54,7 @@ function(data, x = NULL, y = NULL,
     scale_x_discrete(drop = FALSE,
                      labels = waiver()) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
-    scale_fill_manual(name = expression(paste("Wind Speed / m s" ^ ~-1)), 
+    scale_fill_manual(name = expression(paste(title_legend)), 
                       values = data$spd_colors,
                       drop = FALSE)
   
