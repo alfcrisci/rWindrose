@@ -26,13 +26,15 @@ function(data, x = NULL, y = NULL,
   if(is.null(plot_theme)) plot_theme <- "theme_minimal"
   
   if(!is.null(palette)) {
-    n_spd_seq <- length(data$spd_colors)
+    n_spd_seq <- length(data$spd_colors)}
+    
     if ("gray50" %in% data$spd_colors) {
       n_spd_seq <- n_spd_seq - 1
       add_gray <- TRUE
     } else
-      add_gray <- FALSE
-    n_colors_in_range <- n_spd_seq
+    { add_gray <- FALSE
+      n_colors_in_range <- n_spd_seq
+     }
     
     ##########################################
      # create the color map
