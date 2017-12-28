@@ -100,7 +100,7 @@ plot.windrose <-
                               p_windrose <- p_windrose + ylim(c(0,data$countmax))
                               }
   if (frequency_relative==T) {
-                              p_windrose <-p_windrose +scale_y_continuous(labels =  function(x){ paste0(x, "%")}) +
+                              p_windrose <-p_windrose +scale_y_continuous(labels =  function(x){ paste0(100*x, "%")}) +
                                                        ylab("Relative Frequency")+
                                                        xlab("Sectors of Wind provenance")
                               }
