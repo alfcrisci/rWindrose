@@ -35,14 +35,13 @@ function(data, x = NULL, y = NULL,
     
     ##########################################
     
-    labels_plot=waiver();
-
+   
     if ( data$dirres == 22.5) {labels_plot= c("N","NNE","NE","ENE", "E", 
                                 "ESE", "SE","SSE", 
                                 "S","SSW", "SW","WSW", "W", 
                                 "WNW","NW","NNW")};
 
-   if ( data$dirres == 8)    {labels_plot= c("N",,"NE", "E", 
+   if ( data$dirres == 45)    {labels_plot= c("N",,"NE", "E", 
                                     "SE","S","SW","W", 
                                     "NW")};
 
