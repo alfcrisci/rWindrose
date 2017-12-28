@@ -60,7 +60,7 @@ function(data, x = NULL, y = NULL,
     #    geom_bar(aes(y = border, width = 1), position = "stack",
     #             stat = "identity", fill = NA, colour = "white") +
     scale_x_discrete(drop = FALSE,
-                     labels = c("N",,"NE", "E", 
+                     labels = c("N","NE", "E", 
                                     "SE","S","SW","W", 
                                     "NW")) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
