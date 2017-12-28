@@ -72,7 +72,9 @@ function(data, x = NULL, y = NULL,
     #    geom_bar(aes(y = border, width = 1), position = "stack",
     #             stat = "identity", fill = NA, colour = "white") +
     scale_x_discrete(drop = FALSE,
-                     labels = labels_plot) +
+                     labels = c("N",,"NE", "E", 
+                                    "SE","S","SW","W", 
+                                    "NW")) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
     scale_fill_manual(name = paste(as.character(t_legend)), 
                       values = data$spd_colors,
