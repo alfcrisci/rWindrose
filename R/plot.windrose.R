@@ -14,7 +14,8 @@ plot.windrose <-
 function(data, x = NULL, y = NULL, 
                           palette = NULL, 
                           plot_theme = "theme_minimal", 
-                          t_legend="Wind Speed / m s  ^ ~-1", 
+                          t_legend="Wind Speed / m s  ^ ~-1",
+                          frequency_relative=T,
                           ...) {
   
   # dirres
@@ -41,75 +42,66 @@ function(data, x = NULL, y = NULL,
                                                       n_colors_in_range)),                                               
                                               palette))(n_colors_in_range)
     
-    if(packageVersion("ggplot2") > "2.2"){    
-    spd.binned = with(data, factor(spd.binned, levels = rev(levels(spd.binned))))
-    spd.colors = rev(spd.colors)
-  }
+    if(packageVersion("ggplot2") > "2.2") {    
+    data$data$spd_binned =factor(data$data$spd_binned, levels = rev(levels(data$data$spd_binned)))
+    data$spd_colors = rev(data$spd_colors) 
+    }
+    
    if (add_gray)
       spd_colors <- c(spd_colors, "gray50")
     
     data$spd_colors <- spd_colors
     rm(add_gray, n_spd_seq, n_colors_in_range, spd_colors)
-  }
+   }
   
-  if ( data$dirres == 45)    {
-  p_windrose <- ggplot(data = na.omit(data$data),
-                       aes(x = dir_binned,
-                           fill = spd_binned)) +
-    geom_bar() + 
-    #    geom_bar(aes(y = border, width = 1), position = "stack",
-    #             stat = "identity", fill = NA, colour = "white") +
-    scale_x_discrete(drop = FALSE,
-                     labels = c("N","NE", "E", 
-                                    "SE","S","SW","W", 
-                                    "NW")) +
+  if ( data$dirres == 45)    { label_x=c("N","NE", "E","SE","S","SW","W","NW") }
+  if ( data$dirres == 22.5)  { label_x=c("N","NNE","NE","ENE", "E","ESE", "SE","SSE", 
+                                         "S","SSW", "SW","WSW", "W","WNW","NW","NNW")}
+   if (frequency_relative==F) {basis=ggplot(data = na.omit(data$data),
+                                                   aes(x = dir_binned,
+                                                       fill = spd_binned)
+                                           )
+                              }
+   if (frequency_relative==T) {basis=ggplot(data = na.omit(data$data),
+                                                   aes(x = dir_binned,
+                                                       fill = spd_binned,
+                                                       y = (..count..)/sum(..count..)
+                                                      )
+                                           )
+                              }
+  
+
+   p_windrose <- basis +
+                 geom_bar(aes(y = border, width = 1)) + 
+                 scale_x_discrete(drop = FALSE,
+                                  labels = label_x) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
     scale_fill_manual(name = paste(as.character(t_legend)), 
                       values = data$spd_colors,
-                      drop = FALSE)+
-    scale_y_continuous(labels = scales::percent) +
-    ylab("Frequency")
-  }
-  
-   if ( data$dirres == 22.5) {p_windrose <- ggplot(data = na.omit(data$data),
-                       aes(x = dir_binned,
-                           fill = spd_binned)) +
-    geom_bar() + 
-    #    geom_bar(aes(y = border, width = 1), position = "stack",
-    #             stat = "identity", fill = NA, colour = "white") +
-    scale_x_discrete(drop = FALSE,
-                     labels =  c("N","NNE","NE","ENE", "E", 
-                                "ESE", "SE","SSE", 
-                                "S","SSW", "SW","WSW", "W", 
-                                "WNW","NW","NNW")) +
+                      drop = FALSE)
+
+   
+  if ( data$dirres != 22.5 & data$dirres != 45 ) {
+    
+    p_windrose <- basis +
+                 geom_bar(aes(y = border, width = 1)) + 
+                 scale_x_discrete(drop = FALSE,
+                                  labels = waiver()) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
     scale_fill_manual(name = paste(as.character(t_legend)), 
                       values = data$spd_colors,
-                      drop = FALSE)+
-    scale_y_continuous(labels = scales::percent) +
-    ylab("Frequency")
+                      drop = FALSE)
+ 
   }
   
-  if ( data$dirres != 22.5 || data$dirres != 45 ) {p_windrose <- ggplot(data = na.omit(data$data),
-                       aes(x = dir_binned,
-                           fill = spd_binned)) +
-    geom_bar() + 
-    #    geom_bar(aes(y = border, width = 1), position = "stack",
-    #             stat = "identity", fill = NA, colour = "white") +
-    scale_x_discrete(drop = FALSE,
-                     labels =  waiver()) +
-    coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
-    scale_fill_manual(name = paste(as.character(t_legend)), 
-                      values = data$spd_colors,
-                      drop = FALSE)+
-    scale_y_continuous(labels = scales::percent) +
-    ylab("Frequency")
-  }
+  
   # adjust axes if required
-  if (!is.na(data$countmax)){
-    p_windrose <- p_windrose +
-      ylim(c(0,data$countmax))
-  }
+  if (!is.na(data$countmax)) {
+                              p_windrose <- p_windrose + ylim(c(0,data$countmax))
+                              }
+  if (frequency_relative==T) {
+                              p_windrose <- p_windrose +scale_y_continuous(labels = scales::percent) + ylab("Relative Frequency")
+                              }
   
   switch(EXPR = plot_theme,
          theme_gray = p_windrose <- p_windrose + theme_gray(),
