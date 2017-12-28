@@ -33,6 +33,8 @@ function(data, x = NULL, y = NULL,
       add_gray <- FALSE
     n_colors_in_range <- n_spd_seq
     
+    ##########################################
+    
     labels_plot=waiver();
 
     if ( data$dirres == 22.5) {labels_plot= c("N","NNE","NE","ENE", "E", 
