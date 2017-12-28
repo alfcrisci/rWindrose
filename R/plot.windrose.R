@@ -13,18 +13,16 @@
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
 
 plot.windrose <-
-function(data, x = NULL, y = NULL, 
-                          palette = NULL, 
+                function(data,
+                          palette = "YlGnBu", 
                           plot_theme = "theme_minimal", 
                           t_legend="Wind Speed (m/s)",
                           frequency_relative=T,
                           blanked=F,
                           ...) {
  
-  if(plot_theme == "theme_grey") plot_theme <- "theme_gray"
-  if(is.null(plot_theme)) plot_theme <- "theme_minimal"
+   if(is.null(plot_theme)) plot_theme <- "theme_minimal"
   
-  if(!is.null(palette)) {
     
     n_spd_seq <- length(data$spd_colors)
     
@@ -35,7 +33,7 @@ function(data, x = NULL, y = NULL,
     { add_gray <- FALSE
       n_colors_in_range <- n_spd_seq
      }
-    }
+ 
     ##########################################
      # create the color map
     spd_colors <- colorRampPalette(brewer.pal(min(max(3,
