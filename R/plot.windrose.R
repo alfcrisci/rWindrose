@@ -1,12 +1,14 @@
 #' @name plot
 #' @title Plots a waverose or windrose object using ggplot2
 #' @usage plot(data_rose)
-#' @param data a data object of class windrose
-#' @param palette (optional) one of the RColorBrewer ColorBrewer palettes
-#' @param plot_theme (optional) a character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
-#' @param t_legend (optional) a custom character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
+#' @param data  data object of class windrose
+#' @param palette RColorBrewer palettes
+#' @param plot_theme character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
+#' @param frequency_relative logical if the relative frequency of wind velocity classes is computed. Default is TRUE.
+#' @param blanked logical if windrose annotations are eliminated. Default is FALSE.
+#' @param t_legend character Text of legend.
 #' @return returns a ggplot2 graph object
-#' @import scales
+#' @import scales,RColorBrewer,ggtheme
 #' @export
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
 
@@ -14,8 +16,9 @@ plot.windrose <-
 function(data, x = NULL, y = NULL, 
                           palette = NULL, 
                           plot_theme = "theme_minimal", 
-                          t_legend="Wind Speed / m s  ^ ~-1",
+                          t_legend="Wind Speed (m/s)",
                           frequency_relative=T,
+                          blanked=F
                           ...) {
   
   # dirres
@@ -26,6 +29,7 @@ function(data, x = NULL, y = NULL,
   if(is.null(plot_theme)) plot_theme <- "theme_minimal"
   
   if(!is.null(palette)) {
+    
     n_spd_seq <- length(data$spd_colors)
     
     if ("gray50" %in% data$spd_colors) {
@@ -49,11 +53,10 @@ function(data, x = NULL, y = NULL,
     data$spd_colors = rev(data$spd_colors) 
     }
     
-   if (add_gray)
-      spd_colors <- c(spd_colors, "gray50")
-    
-    data$spd_colors <- spd_colors
-    rm(add_gray, n_spd_seq, n_colors_in_range, spd_colors)
+   if (add_gray) {
+                 spd_colors <- c(spd_colors, "gray50")
+                 data$spd_colors <- spd_colors
+                 rm(add_gray, n_spd_seq, n_colors_in_range, spd_colors)
    }
   
   if ( data$dirres == 45)    { label_x=c("N","NE", "E","SE","S","SW","W","NW") }
@@ -84,6 +87,7 @@ function(data, x = NULL, y = NULL,
 
    
   if ( data$dirres != 22.5 & data$dirres != 45 ) {
+    blanked=T;
     
     p_windrose <- basis +
                  geom_bar() + 
@@ -102,7 +106,7 @@ function(data, x = NULL, y = NULL,
                               p_windrose <- p_windrose + ylim(c(0,data$countmax))
                               }
   if (frequency_relative==T) {
-                              p_windrose <- p_windrose +scale_y_continuous(labels = scales::percent) + ylab("Relative Frequency")
+                              p_windrose <-p_windrose +scale_y_continuous(labels =  function(x){ paste0(x, "%")}) + ylab("Relative Frequency")+xlab("Sectors")
                               }
   
   switch(EXPR = plot_theme,
@@ -121,8 +125,7 @@ function(data, x = NULL, y = NULL,
          theme_wsj = {if (ggthemes_loaded) p_windrose <- p_windrose + ggthemes::theme_wsj() else p_windrose <- p_windrose + theme_gray()},
          theme_gray())
   
-  p_windrose <- p_windrose +
-    theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()) 
-  # return the handle to the wind rose
+  if ( blanked==T) {p_windrose <- p_windrose +theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()) }
+                      
   return(p_windrose)
 }
