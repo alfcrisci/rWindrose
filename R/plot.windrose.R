@@ -1,6 +1,5 @@
 #' @name plot
 #' @title Plots a waverose or windrose object using ggplot2
-#' @usage plot(data_rose)
 #' @param data  data object of class windrose
 #' @param palette RColorBrewer palettes
 #' @param plot_theme character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
@@ -8,7 +7,8 @@
 #' @param blanked logical if windrose annotations are eliminated. Default is FALSE.
 #' @param t_legend character Text of legend.
 #' @return returns a ggplot2 graph object
-#' @import scales,RColorBrewer,ggtheme
+#' @import ggthemes
+#' @import RColorBrewer
 #' @export
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
 
@@ -18,13 +18,9 @@ function(data, x = NULL, y = NULL,
                           plot_theme = "theme_minimal", 
                           t_legend="Wind Speed (m/s)",
                           frequency_relative=T,
-                          blanked=F
+                          blanked=F,
                           ...) {
-  
-  # dirres
-  # countmax
-  # spd_colors
-  
+ 
   if(plot_theme == "theme_grey") plot_theme <- "theme_gray"
   if(is.null(plot_theme)) plot_theme <- "theme_minimal"
   
