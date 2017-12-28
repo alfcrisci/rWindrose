@@ -74,7 +74,7 @@ function(data, x = NULL, y = NULL,
   
 
    p_windrose <- basis +
-                 geom_bar(aes(y = border, width = 1)) + 
+                 geom_bar() + 
                  scale_x_discrete(drop = FALSE,
                                   labels = label_x) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
@@ -86,7 +86,7 @@ function(data, x = NULL, y = NULL,
   if ( data$dirres != 22.5 & data$dirres != 45 ) {
     
     p_windrose <- basis +
-                 geom_bar(aes(y = border, width = 1)) + 
+                 geom_bar() + 
                  scale_x_discrete(drop = FALSE,
                                   labels = waiver()) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
