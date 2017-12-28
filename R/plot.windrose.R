@@ -6,8 +6,10 @@
 #' @param plot_theme (optional) a character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
 #' @param t_legend (optional) a custom character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
 #' @return returns a ggplot2 graph object
+#' @import scales
 #' @export
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
+
 plot.windrose <-
 function(data, x = NULL, y = NULL, 
                           palette = NULL, 
@@ -31,6 +33,18 @@ function(data, x = NULL, y = NULL,
       add_gray <- FALSE
     n_colors_in_range <- n_spd_seq
     
+    labels_plot=waiver();
+
+    if ( data$dirres == 22.5) {labels_plot= c("N","NNE","NE","ENE", "E", 
+                                "ESE", "SE","SSE", 
+                                "S","SSW", "SW","WSW", "W", 
+                                "WNW","NW","NNW")};
+
+   if ( data$dirres == 8)    {labels_plot= c("N",,"NE", "E", 
+                                    "SE","S","SW","W", 
+                                    "NW")};
+
+  
     # create the color map
     spd_colors <- colorRampPalette(brewer.pal(min(max(3,
                                                       n_colors_in_range),
@@ -44,7 +58,10 @@ function(data, x = NULL, y = NULL,
     rm(add_gray, n_spd_seq, n_colors_in_range, spd_colors)
   }
   
-  
+  if(packageVersion("ggplot2") > "2.2"){    
+    data$spd.binned = with(data, factor(spd.binned, levels = rev(levels(spd.binned))))
+    spd.colors = rev(spd.colors)
+  }
   p_windrose <- ggplot(data = na.omit(data$data),
                        aes(x = dir_binned,
                            fill = spd_binned)) +
@@ -52,11 +69,13 @@ function(data, x = NULL, y = NULL,
     #    geom_bar(aes(y = border, width = 1), position = "stack",
     #             stat = "identity", fill = NA, colour = "white") +
     scale_x_discrete(drop = FALSE,
-                     labels = waiver()) +
+                     labels = label_plot) +
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
     scale_fill_manual(name = paste(as.character(t_legend)), 
                       values = data$spd_colors,
-                      drop = FALSE)
+                      drop = FALSE)+
+    scale_y_continuous(labels = scales::percent) +
+    ylab("Frequency")
   
   
   # adjust axes if required
