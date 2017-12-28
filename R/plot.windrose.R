@@ -51,17 +51,19 @@ function(data, x = NULL, y = NULL,
                                                   min(9,
                                                       n_colors_in_range)),                                               
                                               palette))(n_colors_in_range)
-    if (add_gray)
+    
+    if(packageVersion("ggplot2") > "2.2"){    
+    spd.binned = with(data, factor(spd.binned, levels = rev(levels(spd.binned))))
+    spd.colors = rev(spd.colors)
+  }
+   if (add_gray)
       spd_colors <- c(spd_colors, "gray50")
     
     data$spd_colors <- spd_colors
     rm(add_gray, n_spd_seq, n_colors_in_range, spd_colors)
   }
   
-  if(packageVersion("ggplot2") > "2.2"){    
-    data$spd.binned = with(data, factor(spd.binned, levels = rev(levels(spd.binned))))
-    spd.colors = rev(spd.colors)
-  }
+  
   p_windrose <- ggplot(data = na.omit(data$data),
                        aes(x = dir_binned,
                            fill = spd_binned)) +
