@@ -1,4 +1,4 @@
-Package: windrose
+Package: rWindrose
 Type: Package
 Title: Provide ggplot2 rose plots for wind data
 Version: 0.2
