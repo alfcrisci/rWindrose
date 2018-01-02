@@ -6,7 +6,7 @@ Date: 2017-12-28
 Author: Alfonso Crisci
 Maintainer: Alfonso Crisci <alfcrisci@gmail.com>
 Depends: ggplot2, RColorBrewer, scales, ggthemes
-Description: It is a fork of https://github.com/tomhopper/windrose to develop a ggplot2 version for wind radial polar plots (windrose).
+Description: It is a fork of https://github.com/tomhopper/windrose R package to develop a ggplot2 version for wind radial polar plots (windrose).
 It is based on code originally created by Andy Clifton and after developed by Thomas Hopper.
 License: MIT
 Encoding: UTF-8
