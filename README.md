@@ -7,7 +7,7 @@ Install with
 
 ```
 library(devtools)
-install_github("alfcrisci/rRindrose")
+install_github("alfcrisci/rWindrose")
 ```
 
 
