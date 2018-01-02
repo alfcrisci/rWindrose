@@ -19,6 +19,8 @@ data_rose <- windrose(data, speed_column_name, direction_column_name)
 
 \item{spdseq}{vector Cut points used for wind speed color fills. They must have at least five elements. Optional.}
 
+\item{spdcalm}{numeric Minimum wind speed treshshold for calm wind condition. Default is 0.3.}
+
 \item{palette}{character RColorBrewer palette. Can be changed when plotting. Optional.}
 
 \item{countmax}{numeric The maximum number of counts for wind direction data in each bin. Optional.}
