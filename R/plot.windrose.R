@@ -2,9 +2,10 @@
 #' @title Plots a waverose or windrose object using ggplot2
 #' @param data  data object of class windrose
 #' @param palette RColorBrewer palettes
-#' @param plot_theme character string specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
-#' @param frequency_relative logical if the relative frequency of wind velocity classes is computed. Default is TRUE.
-#' @param blanked logical if windrose annotations are eliminated. Default is FALSE.
+#' @param plot_theme character String specifying a ggplot theme, e.g. "theme_minimal". Also supports ggthemes and xkcd.
+#' @param frequency_relative logical If the relative frequency of wind velocity classes is computed. Default is TRUE.
+#' @param blanked logical If windrose annotations are eliminated. Default is FALSE.
+#' @param no_legend logical  If legend is eliminated. Default is FALSE.
 #' @param t_legend character Text of legend.
 #' @return returns a ggplot2 graph object
 #' @import ggthemes
@@ -98,7 +99,7 @@ plot.windrose <-
    
   # adjust axes if required
   if (!is.na(data$countmax)) {
-                              p_windrose <- p_windrose + ylim(c(0,data$countmax))+
+                              p_windrose <- p_windrose + scale_y_reverse(limits = 0,data$countmax)+
                                                        ylab("Frequency")+
                                                        xlab("Sectors of wind provenance")
                               }
@@ -125,6 +126,6 @@ plot.windrose <-
          theme_gray())
   
   if ( blanked==T) {p_windrose <- p_windrose +theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()) }
-                      
+  if ( blanked==T) {p_windrose <-p_windrose + guides(fill=FALSE)}
   return(p_windrose)
 }
