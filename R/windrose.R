@@ -9,6 +9,7 @@
 #' @param spdmin numeric Minimum wind speed. Optional.
 #' @param spdmax numeric Maximum wind speed. Optional.
 #' @param spdseq vector Cut points used for wind speed color fills. They must have at least five elements. Optional.
+#' @param spdcalm numeric Minimum wind speed treshshold for calm wind condition. Default is 0.3.
 #' @param countmax numeric The maximum number of counts for wind direction data in each bin. Optional.
 #' @param calm boolean If \code{TRUE}  the calm data  is given. Optional.
 #' @param plot_rose boolean If \code{TRUE}  the rose graph is given. Optional.
@@ -24,6 +25,7 @@ function(data = NULL,
                      spdmin = NULL,
                      spdmax = NULL,
                      spdseq = NULL,
+                     spdcalm = 0.3,
                      palette = "YlGnBu",
                      countmax = NA,
                      flag_centered=F,
@@ -61,8 +63,8 @@ function(data = NULL,
   data[[dir]][dnu] <- NA
   
   missing_data=length(dnu)
-  calm_data<- length(which((data[[spd]]>0 & a<=spdmin)==T))
-  calm_freq<- round(100*(length(which((data[[spd]]>0 & a<=spdmin)==T))/length(data[[spd]])),2)
+  calm_data<- length(which((data[[spd]]>0 & data[[spd]]<=spdcalm)==T))
+  calm_freq<- round(100*(length(which((data[[spd]]>0 & data[[spd]]<=spdcalm)==T))/length(data[[spd]])),2)
   
   # figure out the wind speed bins ----
   if (is.null(spdseq)){
@@ -132,7 +134,7 @@ function(data = NULL,
  
   data$dir_binned  <-  dir_binned
   
-  wind_data <- structure(list(data = data, dirres = dirres, countmax = countmax, spd_colors = spd_colors,calm_data=calm_data,calm_freq=calm_freq), 
+  wind_data <- structure(list(data = data, dirres = dirres, countmax = countmax, spd_colors = spd_colors,missing_data=missing_data,calm_data=calm_data,calm_freq=calm_freq), 
                          class = "windrose")
   attr(wind_data, "hidden") <- c("dirres", "countmax", "spd_colors")
   
