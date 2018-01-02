@@ -21,6 +21,9 @@
 \item{frequency_relative}{logical if the relative frequency of wind velocity classes is computed. Default is TRUE.}
 
 \item{blanked}{logical if windrose annotations are eliminated. Default is FALSE.}
+
+\item{no_legend}{logical If legend is eliminated. Default is FALSE.}
+
 }
 \value{
 returns a ggplot2 graph object
