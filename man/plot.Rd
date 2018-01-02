@@ -5,7 +5,9 @@
 \alias{plot.windrose}
 \title{Plots a waverose or windrose object using ggplot2}
 \usage{
-plot(data_rose)
+\method{plot}{windrose}(data, palette = "YlGnBu",
+  plot_theme = "theme_minimal", t_legend = "Wind Speed (m/s)",
+  frequency_relative = T, blanked = F, ...)
 }
 \arguments{
 \item{data}{data object of class windrose}

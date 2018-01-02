@@ -7,26 +7,28 @@
 data_rose <- windrose(data, speed_column_name, direction_column_name)
 }
 \arguments{
-\item{data}{(optional) a data.frame containing, at least, columns for wind speed and wind direction}
+\item{data}{data.frame Data.frame cointaining data columns for wind speed and wind direction. Optional.}
 
-\item{spd}{(required) either a vector or the data frame column name containing wind speed data. Do not enclose in quotes.}
+\item{spd}{object Data.frame column name containing wind speed data. Do not enclose in quotes. Required.}
 
-\item{dir}{(required) either a vector or the data frame column name containing wind direction data. Do not enclose in quotes.}
+\item{dir}{object Data.frame column na containing wind direction data. Do not enclose in quotes. Required.}
 
-\item{spdmin}{(optional) numeric. the minimum wind speed to plot}
+\item{spdmin}{numeric Minimum wind speed. Optional.}
 
-\item{spdmax}{(optional) numeric. the maximum wind speed to plot}
+\item{spdmax}{numeric Maximum wind speed. Optional.}
 
-\item{spdseq}{(optional) numeric vector. the cut points used for wind speed color fills. must have at least five elements.}
+\item{spdseq}{vector Cut points used for wind speed color fills. They must have at least five elements. Optional.}
 
-\item{palette}{(optional) one of the RColorBrewer ColorBrewer palettes. Can be changed when plotting.}
+\item{palette}{character RColorBrewer palette. Can be changed when plotting. Optional.}
 
-\item{countmax}{(optional) numeric. the maximum number of counts for wind direction data in each bin.}
+\item{countmax}{numeric The maximum number of counts for wind direction data in each bin. Optional.}
 
-\item{plot_rose}{(optional) boolean. if \code{TRUE}, plots the rose graph when generating the windrose object.}
+\item{calm}{boolean If \code{TRUE}  the calm data  is given. Optional.}
+
+\item{plot_rose}{boolean If \code{TRUE}  the rose graph is given. Optional.}
 }
 \value{
-a windrose object.
+list A windrose object.
 }
 \description{
 Create a windrose object, mainly used for plotting rose plots that display both wind direction and speed data.

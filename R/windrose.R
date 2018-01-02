@@ -2,16 +2,17 @@
 #' @title Create a windrose object
 #' @description Create a windrose object, mainly used for plotting rose plots that display both wind direction and speed data.
 #' @usage data_rose <- windrose(data, speed_column_name, direction_column_name)
-#' @param data  data.frame containing, at least, columns for wind speed and wind direction. Optional.
-#' @param palette  character RColorBrewer ColorBrewer palettes. Can be changed when plotting. Optional.
-#' @param spd  Either a vector or the data frame column name containing wind speed data. Do not enclose in quotes. Required.
-#' @param dir  Either a vector or the data frame column name containing wind direction data. Do not enclose in quotes. Required.
-#' @param spdmin numeric the minimum wind speed to plot. Optional.
-#' @param spdmax numeric the maximum wind speed to plot. Optional.
-#' @param spdseq numeric vector the cut points used for wind speed color fills. must have at least five elements. Optional.
-#' @param countmax numeric the maximum number of counts for wind direction data in each bin. Optional.
-#' @param plot_rose boolean. if \code{TRUE}, plots the rose graph when generating the windrose object.Optional.
-#' @return a windrose object (a list containing a data frame and several variables used for plotting).
+#' @param data  data.frame Data.frame cointaining data columns for wind speed and wind direction. Optional.
+#' @param palette  character RColorBrewer palette. Can be changed when plotting. Optional.
+#' @param spd  object Data.frame column name containing wind speed data. Do not enclose in quotes. Required.
+#' @param dir  object Data.frame column na containing wind direction data. Do not enclose in quotes. Required.
+#' @param spdmin numeric Minimum wind speed. Optional.
+#' @param spdmax numeric Maximum wind speed. Optional.
+#' @param spdseq vector Cut points used for wind speed color fills. They must have at least five elements. Optional.
+#' @param countmax numeric The maximum number of counts for wind direction data in each bin. Optional.
+#' @param calm boolean If \code{TRUE}  the calm data  is given. Optional.
+#' @param plot_rose boolean If \code{TRUE}  the rose graph is given. Optional.
+#' @return list A windrose object.
 #' @export
 #' @seealso \code{brewer.pal}.
 windrose <-
@@ -25,7 +26,8 @@ function(data = NULL,
                      spdseq = NULL,
                      palette = "YlGnBu",
                      countmax = NA,
-                     flag_centered=F,  
+                     flag_centered=F,
+                     calm = FALSE,
                      plot_rose = FALSE){
   
   
@@ -57,6 +59,10 @@ function(data = NULL,
   dnu <- (is.na(data[[spd]]) | is.na(data[[dir]]))
   data[[spd]][dnu] <- NA
   data[[dir]][dnu] <- NA
+  
+  missing_data=length(dnu)
+  calm_data<- length(which((data[[spd]]>0 & a<=spdmin)==T))
+  calm_freq<- round(100*(length(which((data[[spd]]>0 & a<=spdmin)==T))/length(data[[spd]])),2)
   
   # figure out the wind speed bins ----
   if (is.null(spdseq)){
@@ -126,7 +132,7 @@ function(data = NULL,
  
   data$dir_binned  <-  dir_binned
   
-  wind_data <- structure(list(data = data, dirres = dirres, countmax = countmax, spd_colors = spd_colors), 
+  wind_data <- structure(list(data = data, dirres = dirres, countmax = countmax, spd_colors = spd_colors,calm_data=calm_data,calm_freq=calm_freq), 
                          class = "windrose")
   attr(wind_data, "hidden") <- c("dirres", "countmax", "spd_colors")
   

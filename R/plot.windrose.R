@@ -9,16 +9,17 @@
 #' @return returns a ggplot2 graph object
 #' @import ggthemes
 #' @import RColorBrewer
+#' @import grid
 #' @export
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
 
 plot.windrose <-
                 function(data,
-                          palette = "YlGnBu", 
-                          plot_theme = "theme_minimal", 
-                          t_legend="Wind Speed (m/s)",
-                          frequency_relative=T,
-                          blanked=F,
+                         palette = "YlGnBu", 
+                         plot_theme = "theme_minimal", 
+                         t_legend="Wind Speed (m/s)",
+                         frequency_relative=T,
+                         blanked=F,
                           ...) {
  
    if(is.null(plot_theme)) plot_theme <- "theme_minimal"
@@ -83,7 +84,7 @@ plot.windrose <-
   if ( data$dirres != 22.5 & data$dirres != 45 ) {
     blanked=T;
     
-    p_windrose <- basis +
+    p_windrose <-basis +
                  geom_bar() + 
                  scale_x_discrete(drop = FALSE,
                                   labels = waiver()) +
@@ -94,7 +95,7 @@ plot.windrose <-
  
   }
   
-  
+   
   # adjust axes if required
   if (!is.na(data$countmax)) {
                               p_windrose <- p_windrose + ylim(c(0,data$countmax))
