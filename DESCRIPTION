@@ -1,12 +1,15 @@
 Package: windrose
 Type: Package
 Title: Provide ggplot2 rose plots for wind data
-Version: 0.1
+Version: 0.2
 Date: 2017-12-28
 Author: Alfonso Crisci
 Maintainer: Alfonso Crisci <alfcrisci@gmail.com>
 Depends: ggplot2, RColorBrewer, scales, ggthemes
-Description: Supports the creation of a “windrose” object, which can then be plotted. Based on code originally created by Andy Clifton and developed and improved by Thomas Hopper (https://github.com/tomhopper/windrose)
+Description: It is a fork of https://github.com/tomhopper/windrose to develop a ggplot2 version of wind radial polar plot (windrose). It is Based on code originally created by Andy Clifton and developed and improved by Thomas Hopper (https://github.com/tomhopper/windroseSupports the creation of a “windrose” object, which can then be plotted. Based on code originally created by Andy Clifton and developed and improved by Thomas Hopper (https://github.com/tomhopper/windrose)
 License: MIT
 Encoding: UTF-8
 RoxygenNote: 6.0.1
+
+
+
