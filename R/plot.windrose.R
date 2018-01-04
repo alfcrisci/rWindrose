@@ -70,7 +70,7 @@ plot.windrose <-
                                                       )
                                            )
                               }
-  if (is.na(data$countmax)) {
+   if (is.na(data$countmax)) {
 
    p_windrose <- basis +
                  geom_bar() + 
@@ -83,8 +83,9 @@ plot.windrose <-
     ylab("Frequency")+
     xlab("Sectors of wind provenance")
 
-   } else
-   {
+   }    
+                  
+   if (!is.na(data$countmax)) {
       p_windrose <-  basis +
                  geom_bar() + 
                  scale_x_discrete(drop = FALSE,
@@ -92,8 +93,8 @@ plot.windrose <-
     coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
     scale_fill_manual(name = paste(as.character(t_legend)), 
                       values = data$spd_colors,
-                      drop = FALSE) + 
-    scale_y_reverse(limits = c(0,data$countmax), expand=c(0,0))+
+                      drop = FALSE,
+                      limits = c(0,data$countmax)) + 
     ylab("Frequency")+
     xlab("Sectors of wind provenance")
                               }
@@ -139,7 +140,7 @@ plot.windrose <-
          theme_wsj = {if (ggthemes_loaded) p_windrose <- p_windrose + ggthemes::theme_wsj() else p_windrose <- p_windrose + theme_gray()},
          theme_gray())
   
-  if ( blanked==T) {p_windrose <- p_windrose +theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()) }
-  if ( blanked==T) {p_windrose <-p_windrose + guides(fill=FALSE)}
+  if ( blanked == T) {p_windrose <- p_windrose +theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()) }
+  if ( no_legend == T) {p_windrose <-p_windrose + guides(fill=FALSE)}
   return(p_windrose)
 }
