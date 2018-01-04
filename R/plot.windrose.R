@@ -93,7 +93,7 @@ plot.windrose <-
     scale_fill_manual(name = paste(as.character(t_legend)), 
                       values = data$spd_colors,
                       drop = FALSE) + 
-    scale_y_reverse(limits = c(0,data$countmax))+
+    scale_y_reverse(limits = c(0,data$countmax), expand=c(0,0))+
     ylab("Frequency")+
     xlab("Sectors of wind provenance")
                               }
