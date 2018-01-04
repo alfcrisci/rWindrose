@@ -99,7 +99,7 @@ plot.windrose <-
    
   # adjust axes if required
   if (!is.na(data$countmax)) {
-                              p_windrose <- p_windrose + scale_y_reverse(limits = 0,data$countmax)+
+                              p_windrose <- p_windrose + scale_y_reverse(limits = c(0,data$countmax))+
                                                        ylab("Frequency")+
                                                        xlab("Sectors of wind provenance")
                               }
