@@ -18,9 +18,10 @@ plot.windrose <-
                 function(data,
                          palette = "YlGnBu", 
                          plot_theme = "theme_minimal", 
-                         t_legend="Wind Speed (m/s)",
-                         frequency_relative=T,
-                         blanked=F,
+                         t_legend = "Wind Speed (m/s)",
+                         frequency_relative = T,
+                         blanked = F,
+                         no_legend = F,
                           ...) {
  
    if(is.null(plot_theme)) plot_theme <- "theme_minimal"
