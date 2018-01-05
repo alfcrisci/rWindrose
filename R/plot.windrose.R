@@ -73,7 +73,14 @@ plot.windrose <-
                               }
    
                   
-   
+   p_windrose <-basis +
+                 geom_bar() + 
+                 scale_x_discrete(drop = FALSE,
+                                  labels = waiver()) +
+    coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
+    scale_fill_manual(name = paste(as.character(t_legend)), 
+                      values = data$spd_colors,
+                      drop = FALSE)
                   
   if ( data$dirres != 22.5 & data$dirres != 45 ) {
     blanked=T;
