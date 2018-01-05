@@ -14,8 +14,7 @@
 #' @export
 #' @seealso \code{ggplot2}, \code{ggtheme} and \code{brewer.pal}.
 
-plot.windrose <-
-                function(data,
+plot.windrose <- function(data,
                          palette = "YlGnBu", 
                          plot_theme = "theme_minimal", 
                          t_legend = "Wind Speed (m/s)",
