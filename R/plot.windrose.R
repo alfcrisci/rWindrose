@@ -91,17 +91,17 @@ plot.windrose <-
  
   }
   
-   
-  # adjust axes if required
+       # adjust axes if required
   if (!is.na(data$countmax)){
-    p_windrose <- p_windrose + ylim(c(0,data$countmax))
-}
+    p_windrose <- p_windrose + scale_y_continuous(limits=c(0,data$countmax))
+    }
+
   if (frequency_relative==T) {
                               p_windrose <-p_windrose +scale_y_continuous(labels =  function(x){ paste0(100*x, "%")}) +
                                                        ylab("Relative frequency")+
                                                        xlab("Sectors of wind provenance")
                               }
-  
+
   switch(EXPR = plot_theme,
          theme_gray = p_windrose <- p_windrose + theme_gray(),
          theme_bw = p_windrose <- p_windrose + theme_bw(),
