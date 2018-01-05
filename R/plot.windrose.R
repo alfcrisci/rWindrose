@@ -71,34 +71,9 @@ plot.windrose <-
                                                       )
                                            )
                               }
-   if (is.na(data$countmax)) {
-
-   p_windrose <- basis +
-                 geom_bar() + 
-                 scale_x_discrete(drop = FALSE,
-                                  labels = label_x) +
-    coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
-    scale_fill_manual(name = paste(as.character(t_legend)), 
-                      values = data$spd_colors,
-                      drop = FALSE)+
-    ylab("Frequency")+
-    xlab("Sectors of wind provenance")
-
-   }    
+   
                   
-   if (!is.na(data$countmax)) {
-      p_windrose <-  basis +
-                 geom_bar() + 
-                 scale_x_discrete(drop = FALSE,
-                                  labels = label_x) +
-    coord_polar(start = -((data$dirres/2)/360) * 2*pi) +
-    scale_fill_manual(name = paste(as.character(t_legend)), 
-                      values = data$spd_colors,
-                      drop = FALSE,
-                      limits = c(0,data$countmax)) + 
-    ylab("Frequency")+
-    xlab("Sectors of wind provenance")
-                              }
+   
                   
   if ( data$dirres != 22.5 & data$dirres != 45 ) {
     blanked=T;
@@ -118,7 +93,9 @@ plot.windrose <-
   
    
   # adjust axes if required
- 
+  if (!is.na(data$countmax)){
+    p_windrose <- p_windrose + ylim(c(0,data$countmax))
+}
   if (frequency_relative==T) {
                               p_windrose <-p_windrose +scale_y_continuous(labels =  function(x){ paste0(100*x, "%")}) +
                                                        ylab("Relative frequency")+
