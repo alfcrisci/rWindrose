@@ -1,3 +1,9 @@
+#' @name windrose_table_data
+#' @title Extract data from windrose objec
+#' @description Extract data from windrose objec
+#' @usage windrose_table_data(data_rose)
+#' @param windroseobj (required) a windrose object
+#  @export
 
 
 windrose_table_data=function(windroseobj) {
