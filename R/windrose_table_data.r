@@ -7,41 +7,34 @@
 
 
 windrose_table_data=function(windroseobj) {
-
 aa=na.omit(windroseobj$data)
-
 res=list()
+b=rbind(tapply(aa$spd,aa$dir_binned,FUN = max),
+        tapply(aa$spd,aa$dir_binned,FUN = mean),
+        tapply(aa$spd,aa$dir_binned,FUN = median),
+        tapply(aa$spd,aa$dir_binned,FUN = function(x) quantile(x,probs=c(0.95),na.rm=T)))
+bb=as.data.frame(bb)
+res$table=bb
+bb$ALL=rbind(max(aa$spd,na.rm),
+              mean(aa$spd,na.rm),
+              median(aa$spd,na.rm),
+              quantile(aa$spd,probs=c(0.95),na.rm=T))
 
 if ( windroseobj$dirres==22.5) {
 
-  bb=rbind(tapply(aa$spd,aa$dir_binned,FUN = max),
-         tapply(aa$spd,aa$dir_binned,FUN = mean),
-         tapply(aa$spd,aa$dir_binned,FUN = median),
-         tapply(aa$spd,aa$dir_binned,FUN = function(x) quantile(x,probs=c(0.95),na.rm=T)))
-bb=as.data.frame(bb)
-names(bb)=c("N","NNE","NE","ENE", "E","ESE", "SE","SSE", 
-            "S","SSW", "SW","WSW", "W","WNW","NW","NNW")
-res$table=bb
+names(res$table)=c("N","NNE","NE","ENE", "E","ESE", "SE","SSE", 
+            "S","SSW", "SW","WSW", "W","WNW","NW","NNW","ALL")
 }  
 
 if ( windroseobj$dirres==45) {
   
-  bb=rbind(tapply(aa$spd,aa$dir_binned,FUN = max),
-           tapply(aa$spd,aa$dir_binned,FUN = mean),
-           tapply(aa$spd,aa$dir_binned,FUN = median),
-           tapply(aa$spd,aa$dir_binned,FUN = function(x) quantile(x,probs=c(0.95),na.rm=T)))
-  bb=as.data.frame(bb)
-  names(bb)==c("N","NE", "E","SE","S","SW","W","NW")
-  res$table=bb
+
+  names(res$table)==c("N","NE", "E","SE","S","SW","W","NW","ALL")
   
   }              
 
-bb=rbind(tapply(aa$spd,aa$dir_binned,FUN = max),
-         tapply(aa$spd,aa$dir_binned,FUN = mean),
-         tapply(aa$spd,aa$dir_binned,FUN = median),
-         tapply(aa$spd,aa$dir_binned,FUN = function(x) quantile(x,probs=c(0.95),na.rm=T)))
-bb=as.data.frame(bb)
-res$table=bb
+rownames(res$table)=c("Max","Mean","Median","Q95")
+
 res$calm=data.frame(N_data=nrow(windroseobj$data),
                     Nmissing_data=windroseobj$missing_data,
                     frew_calms=windroseobj$calm_freq)
