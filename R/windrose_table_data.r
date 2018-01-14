@@ -14,11 +14,11 @@ b=rbind(tapply(aa$spd,aa$dir_binned,FUN = max),
         tapply(aa$spd,aa$dir_binned,FUN = median),
         tapply(aa$spd,aa$dir_binned,FUN = function(x) quantile(x,probs=c(0.95),na.rm=T)))
 bb=as.data.frame(bb)
-res$table=bb
 bb$ALL=rbind(max(aa$spd,na.rm=T),
               mean(aa$spd,na.rm=T),
               median(aa$spd,na.rm=T),
               quantile(aa$spd,probs=c(0.95),na.rm=T))
+res$table=bb
 
 if ( windroseobj$dirres==22.5) {
 
